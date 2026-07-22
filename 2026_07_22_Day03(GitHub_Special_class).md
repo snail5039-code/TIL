@@ -166,10 +166,10 @@ Windows에서는 start를, Mac에서는 open을 사용할 수 있습니다.
 블록 코드 : ``` 백틱 3번으로 감싸준다
 
 ## 링크
-GOOGLE
+[GOOGLE] (<https://google.com>)
 표시글자 : 주소
 ## 이미지
-!Git로고
+![Git로고] (<https://git-scm.com/images/logo@2x.png>)
 대체 텍스트 : 주소
 * 대체 텍스트란 이미지를 정상적으로 불어오지 못했을 때 표시되는 문구
 
