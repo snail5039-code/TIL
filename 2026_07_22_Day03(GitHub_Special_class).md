@@ -70,7 +70,7 @@ main,master : 현재 작업중인 브랜치 이름
 2. git commit -m ""
 3. git log
 4. git log --oneline
-5. git config --global user.name
+5. git config --global user.name 
 6. git config --global user.email
 7. git remote add origin 원격저장소 URL
 8. git remote -v 
@@ -166,10 +166,10 @@ Windows에서는 start를, Mac에서는 open을 사용할 수 있습니다.
 블록 코드 : ``` 백틱 3번으로 감싸준다
 
 ## 링크
-[GOOGLE] (<https://google.com>)
+GOOGLE
 표시글자 : 주소
 ## 이미지
-![Git로고] (<https://git-scm.com/images/logo@2x.png>)
+!Git로고
 대체 텍스트 : 주소
 * 대체 텍스트란 이미지를 정상적으로 불어오지 못했을 때 표시되는 문구
 
@@ -198,3 +198,5 @@ ___
 - 실제로 실습을 하려면  code 박스 밖에서 해야 실습할 수 있다. 참고 **
 
 Lang Chain, Lang Graph 우대사항에 많다. 공부 하자
+
+**#부트캠프 #멀티캠퍼스부트캠프 #AI캠퍼스 #AI에이전트엔지니어**
