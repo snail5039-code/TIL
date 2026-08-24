@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alternative Worklog Directions</title>
+  <style>
+    :root {
+      --ink: #171512;
+      --muted: #777064;
+      --paper: #f8f2e7;
+      --line: #d1c4ad;
+      --red: #c44933;
+      --blue: #1e5c8a;
+      --green: #3f7b53;
+      --yellow: #dfb543;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Georgia, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #161616;
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+    button { font: inherit; }
+    .wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+    }
+    .rail {
+      background: #111;
+      color: #eee;
+      padding: 20px;
+      border-right: 1px solid #333;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+    .rail h1 {
+      font-size: 19px;
+      margin: 0 0 8px;
+      font-weight: 650;
+    }
+    .rail p {
+      margin: 0 0 18px;
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .rail button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      border: 1px solid #2e2e2e;
+      background: #181818;
+      color: #bbb;
+      padding: 10px;
+      margin-bottom: 7px;
+      cursor: pointer;
+    }
+    .rail button.active, .rail button:hover {
+      background: #eee;
+      color: #111;
+      border-color: #eee;
+    }
+    .rail small {
+      display: block;
+      margin-top: 3px;
+      color: inherit;
+      opacity: .62;
+      font-family: var(--mono);
+    }
+    .stage {
+      min-width: 0;
+      background: #222;
+    }
+    .concept {
+      display: none;
+      min-height: 100vh;
+    }
+    .concept.active { display: block; }
+    .reason {
+      padding: 16px 22px;
+      background: #111;
+      color: #bbb;
+      font-size: 14px;
+      line-height: 1.55;
+      border-top: 1px solid #333;
+    }
+
+    /* 01 convenience store receipt */
+    .receipt {
+      min-height: calc(100vh - 49px);
+      background: #e5ded0;
+      padding: 34px;
+      display: grid;
+      place-items: start center;
+    }
+    .slip {
+      width: min(560px, 100%);
+      background: #fbfaf4;
+      color: #141414;
+      padding: 26px;
+      box-shadow: 0 16px 50px rgba(0,0,0,.18);
+      font-family: var(--mono);
+      position: relative;
+    }
+    .slip:before, .slip:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background: repeating-linear-gradient(90deg, transparent 0 10px, #e5ded0 10px 20px);
+    }
+    .slip:before { top: 0; }
+    .slip:after { bottom: 0; }
+    .slip h2 { text-align: center; font-size: 18px; margin: 12px 0 18px; }
+    .slip .line { border-top: 1px dashed #111; margin: 14px 0; }
+    .slip .row { display: flex; justify-content: space-between; gap: 18px; line-height: 1.8; font-size: 13px; }
+    .barcode {
+      height: 64px;
+      margin-top: 20px;
+      background: repeating-linear-gradient(90deg, #111 0 2px, transparent 2px 4px, #111 4px 5px, transparent 5px 9px);
+    }
+
+    /* 02 subway map */
+    .subway {
+      min-height: calc(100vh - 49px);
+      background: #f7f3e8;
+      padding: 36px;
+      overflow: hidden;
+    }
+    .subway h2 { margin: 0 0 28px; font-size: clamp(34px, 6vw, 72px); line-height: .95; }
+    .map {
+      position: relative;
+      min-height: 520px;
+      border: 1px solid var(--line);
+      background: #fffaf0;
+      overflow: hidden;
+    }
+    .track { position: absolute; height: 10px; border-radius: 999px; transform-origin: left center; }
+    .track.one { background: var(--red); width: 720px; top: 110px; left: 70px; transform: rotate(24deg); }
+    .track.two { background: var(--blue); width: 680px; top: 360px; left: 70px; transform: rotate(-18deg); }
+    .track.three { background: var(--green); width: 540px; top: 250px; left: 190px; transform: rotate(90deg); }
+    .station {
+      position: absolute;
+      width: 116px;
+      background: #fff;
+      border: 3px solid #111;
+      padding: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      z-index: 2;
+    }
+    .s1 { top: 70px; left: 90px; }
+    .s2 { top: 165px; left: 320px; }
+    .s3 { top: 290px; left: 520px; }
+    .s4 { top: 380px; left: 210px; }
+    .s5 { top: 190px; left: 680px; }
+
+    /* 03 zine */
+    .zine {
+      min-height: calc(100vh - 49px);
+      background: #f3ead9;
+      padding: 30px;
+    }
+    .zine-page {
+      max-width: 980px;
+      margin: auto;
+      background: #fffaf0;
+      border: 2px solid #111;
+      min-height: 660px;
+      padding: 26px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      transform: rotate(-.4deg);
+      box-shadow: 8px 8px 0 #111;
+    }
+    .zine h2 {
+      grid-column: 1 / -1;
+      font-size: clamp(46px, 9vw, 112px);
+      line-height: .8;
+      margin: 0;
+      letter-spacing: -.08em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+    .cutout {
+      background: #111;
+      color: #fffaf0;
+      padding: 18px;
+      font-family: var(--mono);
+      line-height: 1.7;
+      transform: rotate(1deg);
+    }
+    .zine-note {
+      border: 2px dashed #111;
+      padding: 18px;
+      line-height: 1.65;
+      font-family: var(--serif);
+      font-size: 18px;
+      transform: rotate(-1deg);
+    }
+
+    /* 04 lab bench */
+    .lab {
+      min-height: calc(100vh - 49px);
+      background: #dbe6de;
+      padding: 28px;
+    }
+    .bench {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .clipboard, .instrument {
+      background: #f9f5e9;
+      border: 1px solid #6b705c;
+      padding: 22px;
+      min-height: 590px;
+    }
+    .clip {
+      width: 120px;
+      height: 30px;
+      border: 1px solid #666;
+      background: #b8b6aa;
+      margin: -10px auto 18px;
+      border-radius: 0 0 10px 10px;
+    }
+    .formline { border-bottom: 1px solid #999; padding: 14px 0 7px; display:flex; justify-content:space-between; gap:12px; }
+    .meter {
+      height: 180px;
+      border: 1px solid #444;
+      margin: 28px 0;
+      background: linear-gradient(90deg, transparent 49%, #444 49% 51%, transparent 51%), radial-gradient(circle at 50% 100%, #7fb47d 0 42%, transparent 43%);
+    }
+    .knobs { display:flex; gap:14px; }
+    .knob { width:70px; height:70px; border-radius:50%; border:8px solid #333; background:#777; }
+
+    /* 05 game inventory */
+    .inventory {
+      min-height: calc(100vh - 49px);
+      background: #1d1a24;
+      color: #eee6d2;
+      padding: 28px;
+      font-family: var(--mono);
+    }
+    .game-grid {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 18px;
+    }
+    .player, .items {
+      border: 4px solid #6f5e3a;
+      background: #2a2534;
+      padding: 18px;
+      box-shadow: inset 0 0 0 2px #18151e;
+    }
+    .sprite {
+      height: 220px;
+      background:
+        linear-gradient(#0000 0 40%, #d7b56d 40% 60%, #0000 60%),
+        linear-gradient(90deg, #0000 0 35%, #86b6dc 35% 65%, #0000 65%);
+      image-rendering: pixelated;
+      border: 2px solid #6f5e3a;
+      margin-bottom: 14px;
+    }
+    .slotgrid { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+    .slot { min-height:120px; border:2px solid #6f5e3a; background:#17141d; padding:10px; }
+    .itemicon { font-size:28px; margin-bottom:8px; }
+
+    /* 06 newspaper */
+    .newspaper {
+      min-height: calc(100vh - 49px);
+      background: #e6ddca;
+      padding: 26px;
+    }
+    .papernews {
+      max-width: 1100px;
+      margin: auto;
+      background: #fbf7eb;
+      border: 1px solid #222;
+      padding: 28px;
+      font-family: var(--serif);
+      color: #191713;
+    }
+    .masthead {
+      text-align: center;
+      font-size: clamp(42px, 8vw, 92px);
+      line-height: .9;
+      border-bottom: 4px double #222;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+    .columns {
+      columns: 3 220px;
+      column-gap: 28px;
+      column-rule: 1px solid #222;
+      line-height: 1.55;
+      font-size: 17px;
+    }
+    .columns h3 { break-after: avoid; font-size: 28px; line-height: 1; margin: 0 0 10px; }
+
+    /* 07 file cabinet */
+    .cabinet {
+      min-height: calc(100vh - 49px);
+      background: #b8ab91;
+      padding: 36px;
+    }
+    .drawer {
+      max-width: 920px;
+      margin: auto;
+      background: #8b806d;
+      border: 3px solid #4e493f;
+      padding: 24px 24px 80px;
+      box-shadow: inset 0 -28px 0 rgba(0,0,0,.12);
+    }
+    .folders { display:flex; gap:8px; align-items:flex-end; overflow:hidden; }
+    .folder {
+      flex: 1;
+      min-width: 130px;
+      height: 430px;
+      background: #e2c56d;
+      border: 2px solid #6c5b2e;
+      padding: 18px 12px;
+      position: relative;
+      transform: translateY(var(--y));
+      font-family: var(--mono);
+    }
+    .folder:before {
+      content: "";
+      position:absolute;
+      top:-28px;
+      left:10px;
+      width:80px;
+      height:28px;
+      background:inherit;
+      border:2px solid #6c5b2e;
+      border-bottom:0;
+    }
+
+    /* 08 photo contact sheet */
+    .contactsheet {
+      min-height: calc(100vh - 49px);
+      background: #191919;
+      color: #eee;
+      padding: 28px;
+      font-family: var(--mono);
+    }
+    .sheetgrid {
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+      max-width:1100px;
+      margin:auto;
+    }
+    .frame {
+      background:#f4efe2;
+      color:#111;
+      padding:10px;
+      min-height:210px;
+    }
+    .thumb {
+      height:150px;
+      background:
+        linear-gradient(135deg, rgba(30,92,138,.7), rgba(196,73,51,.4)),
+        repeating-linear-gradient(45deg, #ddd 0 8px, #bbb 8px 16px);
+      margin-bottom:8px;
+    }
+    .frame:nth-child(even) .thumb { background: linear-gradient(135deg, rgba(63,123,83,.7), rgba(223,181,67,.4)), repeating-linear-gradient(90deg, #ddd 0 6px, #aaa 6px 12px); }
+
+    @media (max-width: 880px) {
+      .wrap, .bench, .game-grid { grid-template-columns: 1fr; }
+      .rail { position: relative; height: auto; }
+      .zine-page, .bp { grid-template-columns: 1fr; }
+      .sheetgrid { grid-template-columns: repeat(2, 1fr); }
+      .columns { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="rail">
+      <h1>다른 디자인 8개</h1>
+      <p>앞 후보들이 아직 웹 템플릿 같아서, 이번엔 실물 은유를 세게 잡았다. 영수증, 지하철 노선도, 잡지, 실험실, 게임 인벤토리 같은 쪽.</p>
+      <nav id="nav"></nav>
+    </aside>
+    <main class="stage">
+      <section class="concept active" data-name="Receipt Log" data-sub="편의점 영수증처럼 하루 학습이 찍히는 디자인">
+        <div class="receipt">
+          <div class="slip">
+            <h2>SNail TIL STORE</h2>
+            <div class="row"><span>DATE</span><span>2026-08-21</span></div>
+            <div class="row"><span>CASHIER</span><span>PYTHON_08</span></div>
+            <div class="line"></div>
+            <div class="row"><span>TMDB API 문제 7</span><span>1EA</span></div>
+            <div class="row"><span>credits endpoint</span><span>OK</span></div>
+            <div class="row"><span>genre mapping</span><span>TODO</span></div>
+            <div class="row"><span>request cleanup</span><span>MEMO</span></div>
+            <div class="line"></div>
+            <div class="row"><span>TOTAL LEARNED</span><span>3 NOTES</span></div>
+            <div class="row"><span>CHANGE</span><span>less confusion</span></div>
+            <div class="barcode"></div>
+          </div>
+        </div>
+        <div class="reason">느낌: 제일 안 흔함. 매일의 TIL이 영수증처럼 쌓이는 컨셉이라 귀엽고 기억에 남음.</div>
+      </section>
+
+      <section class="concept" data-name="Subway Map" data-sub="개념들이 역처럼 연결되는 노선도 디자인">
+        <div class="subway">
+          <h2>Python 노선도</h2>
+          <div class="map">
+            <div class="track one"></div><div class="track two"></div><div class="track three"></div>
+            <div class="station s1">Day23<br>requests</div>
+            <div class="station s2">Day24<br>TMDB API</div>
+            <div class="station s3">genre map</div>
+            <div class="station s4">env token</div>
+            <div class="station s5">project</div>
+          </div>
+        </div>
+        <div class="reason">느낌: TIL을 날짜순이 아니라 개념 연결로 보여줌. 나중에 ML/LLM/Python 노선을 나누면 재밌어짐.</div>
+      </section>
+
+      <section class="concept" data-name="Study Zine" data-sub="복사집에서 뽑은 개인 잡지 같은 디자인">
+        <div class="zine">
+          <div class="zine-page">
+            <h2>API<br>삽질<br>신문</h2>
+            <div class="cutout">ISSUE 024<br><br>fetch_tmdb_api()<br>movie/{id}/credits<br>genre_ids -> names<br><br>NO PRETTY PORTFOLIO</div>
+            <div class="zine-note">강사님 풀이를 그대로 따라 쓰는 게 아니라, 내가 어디서 헷갈렸는지 크게 붙여놓는 잡지형 로그. 스크린샷, 코드, 짧은 욕, 고친 흔적까지 들어가도 어울림.</div>
+          </div>
+        </div>
+        <div class="reason">느낌: 가장 개성 강함. 예쁘장한 AI 느낌은 거의 사라지고, 손으로 만든 학습 잡지 같아짐.</div>
+      </section>
+
+      <section class="concept" data-name="Lab Bench" data-sub="실험 기록지와 계측기 UI">
+        <div class="lab">
+          <div class="bench">
+            <div class="clipboard"><div class="clip"></div><h2>Experiment 24</h2><div class="formline"><span>subject</span><b>TMDB API</b></div><div class="formline"><span>hypothesis</span><b>endpoint를 함수화하면 덜 헷갈린다</b></div><div class="formline"><span>result</span><b>cast 조회 성공</b></div><div class="formline"><span>next test</span><b>genre mapping 최적화</b></div></div>
+            <div class="instrument"><h2>confusion meter</h2><div class="meter"></div><div class="knobs"><div class="knob"></div><div class="knob"></div><div class="knob"></div></div><p>request count, error rate, 이해도 같은 지표를 장난스럽게 보여줄 수 있음.</p></div>
+          </div>
+        </div>
+        <div class="reason">느낌: 공부를 실험처럼 보여줌. ML 기록이랑 특히 궁합 좋음.</div>
+      </section>
+
+      <section class="concept" data-name="RPG Inventory" data-sub="배운 개념을 아이템처럼 모으는 디자인">
+        <div class="inventory">
+          <div class="game-grid">
+            <div class="player"><div class="sprite"></div><b>snail Lv.24</b><br>class: Python learner<br>status: debugging</div>
+            <div class="items"><h2>inventory</h2><div class="slotgrid">
+              <div class="slot"><div class="itemicon">🧪</div>API Flask<br><span class="muted">reusable function</span></div>
+              <div class="slot"><div class="itemicon">🗝</div>Bearer Token<br><span class="muted">env locked</span></div>
+              <div class="slot"><div class="itemicon">🎬</div>TMDB Cast<br><span class="muted">credits path</span></div>
+              <div class="slot"><div class="itemicon">🧭</div>Genre Map<br><span class="muted">next quest</span></div>
+              <div class="slot"><div class="itemicon">📜</div>Error Scroll<br><span class="muted">raise_for_status</span></div>
+              <div class="slot"><div class="itemicon">⚙</div>Refactor Gear<br><span class="muted">equipped</span></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="reason">느낌: 학습 성취감이 강함. 너무 게임스럽게 가면 장난 같지만, 잘 조절하면 아주 기억 남음.</div>
+      </section>
+
+      <section class="concept" data-name="Daily Newspaper" data-sub="하루 학습을 신문 1면처럼 편집">
+        <div class="newspaper">
+          <div class="papernews">
+            <div class="masthead">The Daily TIL</div>
+            <div class="columns">
+              <h3>TMDB API 함수화, 요청 흐름 단순화</h3>
+              오늘 Python_08 수업에서는 영화 API를 다루며 endpoint를 조립하는 방법을 다시 확인했다. 최고 평점 영화의 배우를 조회하려면 now_playing에서 영화를 고른 뒤 credits endpoint로 이동해야 한다.
+              <h3>Genre 문제, 반복 요청의 그림자</h3>
+              장르 이름을 얻기 위해 detail 요청을 남발하면 구조가 지저분해진다. genre list를 먼저 받아 dictionary로 바꾸는 접근이 더 자연스럽다.
+              <h3>내일의 예고</h3>
+              요청 함수, 예외 처리, 환경변수를 하나의 작은 API client로 묶어본다.
+            </div>
+          </div>
+        </div>
+        <div class="reason">느낌: 날짜별 TIL과 찰떡. 매일 신문 한 장 발행하는 분위기라 워크로그 정체성이 선명함.</div>
+      </section>
+
+      <section class="concept" data-name="File Cabinet" data-sub="날짜별 폴더를 실제 서랍처럼 쌓는 디자인">
+        <div class="cabinet">
+          <div class="drawer">
+            <div class="folders">
+              <div class="folder" style="--y:40px">Python_04<br><br>pandas</div>
+              <div class="folder" style="--y:10px">Python_05<br><br>API</div>
+              <div class="folder" style="--y:70px">Python_06<br><br>requests</div>
+              <div class="folder" style="--y:20px">Python_07<br><br>errors</div>
+              <div class="folder" style="--y:0px">Python_08<br><br>TMDB</div>
+            </div>
+          </div>
+        </div>
+        <div class="reason">느낌: TIL이 ‘파일 캐비닛’에 쌓이는 컨셉. 레트로하고 관리되는 느낌이 있음.</div>
+      </section>
+
+      <section class="concept" data-name="Contact Sheet" data-sub="스크린샷과 로그를 필름처럼 고르는 디자인">
+        <div class="contactsheet">
+          <div class="sheetgrid">
+            <div class="frame"><div class="thumb"></div>001<br>requests error</div>
+            <div class="frame"><div class="thumb"></div>002<br>TMDB now_playing</div>
+            <div class="frame"><div class="thumb"></div>003<br>credits response</div>
+            <div class="frame"><div class="thumb"></div>004<br>genre map</div>
+            <div class="frame"><div class="thumb"></div>005<br>ML logistic</div>
+            <div class="frame"><div class="thumb"></div>006<br>random forest</div>
+            <div class="frame"><div class="thumb"></div>007<br>mini project</div>
+            <div class="frame"><div class="thumb"></div>008<br>worklog redesign</div>
+          </div>
+        </div>
+        <div class="reason">느낌: 이미지/실행화면이 많은 너 TIL에 맞음. 스크린샷을 ‘증거 필름’처럼 보여줄 수 있음.</div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const concepts = [...document.querySelectorAll(".concept")];
+    const nav = document.getElementById("nav");
+    concepts.forEach((item, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.innerHTML = `${String(index + 1).padStart(2, "0")}. ${item.dataset.name}<small>${item.dataset.sub}</small>`;
+      button.addEventListener("click", () => show(index));
+      nav.appendChild(button);
+    });
+    function show(index) {
+      concepts.forEach((item, i) => item.classList.toggle("active", i === index));
+      [...nav.children].forEach((item, i) => item.classList.toggle("active", i === index));
+      history.replaceState(null, "", `#${index + 1}`);
+    }
+    const start = Math.max(0, Math.min(concepts.length - 1, Number(location.hash.slice(1)) - 1 || 0));
+    show(start);
+  </script>
+</body>
+</html>
