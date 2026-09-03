@@ -2,7 +2,7 @@
 
 ![1번 카드](./images30/1.png)
 ![1번 카드](./images30/2.png)
-![1번 카드](./images30/3.png)
+![1번 카드](./images30/3.webp)
 ![1번 카드](./images30/4.png)
 ![1번 카드](./images30/5.png)
 ![1번 카드](./images30/6.png)

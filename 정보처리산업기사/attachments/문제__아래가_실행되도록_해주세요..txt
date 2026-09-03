@@ -1,0 +1,224 @@
+// 문제 : 아래가 실행되도록 해주세요.
+// 조건 : 배열을 사용할 수 없습니다.
+
+class Main {
+	public static void main(String[] args) {
+		사람인력관리소 a사람인력관리소 = new 사람인력관리소();
+
+		a사람인력관리소.add사람("홍길순", 33);
+		// 나이가 33살인 1번째 사람(홍길순)이 추가되었습니다.
+		a사람인력관리소.add사람("홍길동", 20);
+		// 나이가 20살인 2번째 사람(홍길동)이 추가되었습니다.
+		a사람인력관리소.add사람("임꺽정", 30);
+		// 나이가 30살인 3번째 사람(임꺽정)이 추가되었습니다.
+
+		사람 a사람1 = a사람인력관리소.get사람(1);
+		a사람1.자기소개();
+		// 저는 1번, 홍길순, 33살 입니다.
+
+		사람 a사람2 = a사람인력관리소.get사람(2);
+		a사람2.자기소개();
+		// 저는 2번, 홍길동, 20살 입니다.
+
+		사람 a사람3 = a사람인력관리소.get사람(3);
+		a사람3.자기소개();
+		// 저는 3번, 임꺽정, 30살 입니다.
+	}
+}
+
+class 사람인력관리소 {
+	int 번호 = 0;
+	사람[] 사람들 = new 사람[3];
+
+	void add사람(String 이름, int 나이) {
+
+		사람 a사람 = new 사람(나이, 이름, 번호 + 1);
+		++번호;
+		사람들[번호 - 1] = a사람;
+
+		System.out.printf("나이가 %d살인 %d번째 사람(%s)이 추가되었습니다.\n", 나이, 번호, 이름);
+	}
+
+	사람 get사람(int 번호) {
+
+		return 사람들[번호 - 1];
+	}
+
+}
+
+class 사람 {
+	String 이름;
+	int 나이;
+	int 번호;
+
+	사람(int 나이, String 이름, int 번호) {
+		this.나이 = 나이;
+		this.이름 = 이름;
+		this.번호 = 번호;
+	}
+
+	void 자기소개() {
+		System.out.printf("저는 %d번, %s, %d살 입니다.\n", 번호, 이름, 나이);
+	}
+
+}
+
+
+===============
+간단한 별찍기 스캐너 
+import java.util.Scanner;
+
+class Main{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String cmd = sc.nextLine();
+		
+		String[] str = cmd.split(" ");
+		int a = Integer.parseInt(str[0]); 
+		int b = Integer.parseInt(str[1]);
+		
+		for(int i = 1; i <= a; i++) {
+			for(int j = 1; j <= b; j++) {
+				System.out.printf("*");
+			}
+			System.out.println();
+		}
+		
+		
+	}
+}
+
+정삼각형 출력
+class Main {
+	public static void main(String[] args) {
+//		입력값이 3일때 별 
+		
+		for(int i = 1; i <= 3; i++) {
+			for(int j = 1; j <= 3 - i; j++) {
+				System.out.printf(" ");
+			}
+			for(int j = 1; j <= i + (i - 1); j++) {
+				System.out.printf("*");
+			}
+			System.out.println();
+		}
+		
+		
+		
+	}
+}
+
+=========================
+역 피라미드 출력
+class Main {
+	public static void main(String[] args) {
+//		입력값이 3일때 별 
+		
+		for(int i = 1; i <= 3; i++) {
+			for(int j = 1; j <= i - 1; j++) {
+				System.out.printf(" ");
+			}
+			for(int j = 1; j <= 2 * (3 - i) + 1; j++) {
+				System.out.printf("*");
+			}
+			System.out.println();
+		}
+		
+		
+		
+	}
+}
+
+
+===============================
+게시판 틀잡기
+package com.koreaIT.exam;
+
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("== 프로그램 시작 ==");
+
+		while (true) {
+			System.out.printf("명령어 : ");
+			String cmd = sc.nextLine();
+			if (cmd.equals("exit")) {
+				break;
+			}
+		}
+		System.out.println("== 프로그램 종료 ==");
+		sc.close();
+	}
+}
+
+===============================
+article list, write
+
+package com.koreaIT.exam;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("== 프로그램 시작 ==");
+		int LastArticleid = 0;
+		List<Article> articles = new ArrayList<>();
+
+		while (true) {
+			System.out.printf("명령어 : ");
+			String cmd = sc.nextLine();
+			if (cmd.equals("exit")) {
+				break;
+			}
+			if (cmd.equals("article list")) {
+				
+				if(articles.size() == 0) {
+					System.out.println("게시글이 존재하지 않습니다.");
+					continue;
+				}
+				
+				System.out.println("번호		|		제목");
+				for(int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i); 
+					System.out.printf("%s		|		%s\n",article.id, article.title );
+				}
+				
+			} else if (cmd.equals("article write")) {
+
+				System.out.printf("제목 : ");
+				String title = sc.nextLine();
+				System.out.printf("내용 : ");
+				String body = sc.nextLine();
+
+				++LastArticleid;
+
+				Article article = new Article(body,LastArticleid,title);
+				articles.add(article);
+				
+				System.out.println(LastArticleid + "번 게시글이 작성되었습니다.");
+			}
+		}
+		System.out.println("== 프로그램 종료 ==");
+		sc.close();
+	}
+}
+
+class Article {
+	Article(String body, int id, String title) {
+		this.body = body;
+		this.id = id;
+		this.title = title;
+		
+		
+	}
+	String title;
+	String body;
+	int id;
+}
+
+

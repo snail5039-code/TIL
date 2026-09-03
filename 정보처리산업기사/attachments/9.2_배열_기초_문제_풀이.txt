@@ -1,0 +1,30 @@
+class Main {
+	public static void main(String[] args) {
+//		1. 방 10개짜리 정수배열 생성
+//		2. 순서대로 10 ~100까지 10씩 증가하는 값 넣기
+//		3. 배열이 가진 모든 값 순서대로 출력하기
+//		4. 배열이 가진 모든 값의 합계 구하기
+//		5. 배열이 가진 모든 값의 평균 구하기
+		
+		int[] arr = new int[10];
+		
+		int sum = 0;
+		
+//		10 * (0~9 + 1)
+		
+		for(int i = 0; i < arr.length; i++) {
+			// 값을 넣는 과정
+			arr[i] = 10 * (i + 1);
+			
+			// 값을 출력하는 과정
+			System.out.println(arr[i]);
+			
+			// 값의 합계를 구하는 과정
+			sum += arr[i];
+		}
+		
+		System.out.println("합계 : " + sum);
+		System.out.println("평균 : " + sum / arr.length);
+	} 
+	
+}

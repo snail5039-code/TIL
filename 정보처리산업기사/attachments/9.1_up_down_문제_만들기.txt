@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {
+// 1. f11을 눌러서 시작하면 사용자에게 숫자를 입력하세요. 라는 문구를 하나 보여주고 실제로 입력을 받는다.
+// 2. 입력을 받으면 입력받은 값과 rs가 가진 값을 비교하여 up인지, down인지 사용자에게 출력으로 알려준다.
+// 3. 다시 숫자를 입력하세요. 라는 문구를 보여주며 다시 입력을 받을 수 있게 해서 또 입력받고 2번의 과정을 반복
+// 4. 정답을 맞추면 정답입니다. 출력해서 보여주고 프로그램 종료
+	  
+//	  rs(1 ~ 100 사이의 랜덤한 숫자 생성 코드)
+	  int rs = (int) (Math.random() * 100) + 1;
+	  
+//	  자바에서의 입력을 위한 준비
+	  Scanner sc = new Scanner(System.in);
+	  
+	  System.out.println("숫자를 입력하세요. : " );
+//	  자바에서 입력이라는 행위
+	  int num = sc.nextInt();
+	  
+	  while(rs != num) {
+		  if(rs > num) {
+			  System.out.println("UP");
+			  System.out.println("다시 숫자를 입력하세요. : ");
+			  num = sc.nextInt();
+		  } else if(rs < num) {
+			  System.out.println("DOWN");
+			  System.out.println("다시 숫자를 입력하세요. : ");
+			  num = sc.nextInt();
+		  }
+	  }
+	  if(rs == num) {
+		  System.out.println("정답입니다.");
+	  }
+	  
+	  
+//	  scanner 자원 종료 코드 
+	  sc.close();
+  }
+}
+
+
+요러한 방법도 있지만 더욱 간단하게 하기 위해서
+
+
+import java.util.Scanner;
+//1. f11을 눌러서 시작하면 사용자에게 숫자를 입력하세요. 라는 문구를 하나 보여주고 실제로 입력을 받는다.
+//2. 입력을 받으면 입력받은 값과 rs가 가진 값을 비교하여 up인지, down인지 사용자에게 출력으로 알려준다.
+//3. 다시 숫자를 입력하세요. 라는 문구를 보여주며 다시 입력을 받을 수 있게 해서 또 입력받고 2번의 과정을 반복
+//4. 정답을 맞추면 정답입니다. 출력해서 보여주고 프로그램 종료
+class Main {
+  public static void main(String[] args) {
+//	  rs(1 ~ 100 사이의 랜덤한 숫자 생성 코드)
+	  int rs = (int) (Math.random() * 100) + 1;
+	  
+//	  자바에서의 입력을 위한 준비
+	  Scanner sc = new Scanner(System.in);
+
+	  System.out.printf("숫자를 입력하세요. : " );
+	  while(true) {
+//		  자바에서 입력이라는 행위
+		  int num = sc.nextInt();
+		  if(rs > num) {
+			  System.out.println("UP");
+		  } else if(rs < num) {
+			  System.out.println("DOWN");
+		  }
+		  else {
+			  System.out.println("정답입니다.");
+			  break;
+		  }
+		  System.out.printf("다시 숫자를 입력하세요. : ");
+	  }
+//	  scanner 자원 종료 코드 
+	  sc.close();
+  }
+}
+이런식으로 줄인다.!!

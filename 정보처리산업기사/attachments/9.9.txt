@@ -1,0 +1,164 @@
+
+
+
+// List
+// 목록 
+// 크기가 초기화와 동시에 정해진다는 배열의 단점을 보완한 것 
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Main {
+	public static void main(String[] args) {
+		// exam1();
+		// exam2();
+		// exam3();
+		exam4();
+	}
+
+	static void exam4() {
+		System.out.println("== 예제 4 ==");
+		List<Article> articles = new ArrayList<>();
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+
+		for (int i = 0; i < articles.size(); i++) {
+			Article article = articles.get(i);
+			System.out.println(article.id);
+		}
+	}
+
+	static void exam3() {
+		System.out.println("== 예제 3 ==");
+		ArrayList<Article> articles = new ArrayList<Article>();
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+
+		for (int i = 0; i < articles.size(); i++) {
+			Article article = articles.get(i);
+			System.out.println(article.id);
+		}
+	}
+
+	static void exam2() {
+		System.out.println("== 예제 2 ==");
+		ArrayList articles = new ArrayList();
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+		articles.add(new Article());
+
+		for (int i = 0; i < articles.size(); i++) {
+			Article article = (Article) articles.get(i);
+			System.out.println(article.id);
+		}
+	}
+
+	static void exam1() {
+		System.out.println("== 예제 1 ==");
+		int articlesSize = 0;
+		Article[] articles = new Article[1000];
+		articles[0] = new Article();
+		articlesSize++;
+		articles[1] = new Article();
+		articlesSize++;
+		articles[2] = new Article();
+		articlesSize++;
+		articles[3] = new Article();
+		articlesSize++;
+		articles[4] = new Article();
+
+		for (int i = 0; i < articlesSize; i++) {
+			System.out.println(articles[i].id);
+		}
+	}
+}
+
+class Article {
+	static int lastId;
+	int id;
+
+	Article() {
+		this.id = ++lastId;
+	}
+}
+
+collection framework
+다수의 데이터 표준화된 방식 
+Map -> List랑 유사하게 복수개의 데이터를 처리하는 객체
+순서 x, 중복 값 저장. 중복 키는 안됨
+Map<String, Integer> map = new HashMap<>();
+map.put("a", 10);
+map.put("b", 20);
+map.put("a", 30);
+		
+System.out.println(map.get("b"));
+
+		
+}
+		
+//a = 키 : 꺼낼때는 키가지고 꺼낸다. (찾아갈 곳), 결과 값 : 10
+//키는 중복되면 안되고 값은 중복되도 된다.
+//key : value
+//제너릭에는 기본 자료형이 들어가지 않는다
+
+List 순서, 데이터 중복 가능
+
+set 
+순서 x, 종복 x
+
+queue
+지금은 몰라도 됨.
+
+//반목문
+//while
+//do-while
+//for
+//향상된 for
+//배열이나 리스트의 요소들을 순회할 때 (정방향 순회만 가능. 역순 불가)
+		
+int[] arr = new int[5];
+arr[0] = 10;
+arr[1] = 20;
+arr[2] = 30;
+arr[3] = 40;
+arr[4] = 50;
+		
+for(int a : arr) {
+	System.out.println(a);
+}
+
+
+접근 제한자(제어자)
+4가지 종류 
+1. public 
+* 패키지에 상관없이 모두 허용 
+
+2. private 
+* 패키지에 상관없이 나(지금 이 클래스)만 가능 
+* 캡슐화(정보 은닉), 불필요한 정보를 보여주지 않아도 되서.
+* getter, setter를 사용 
+
+3. protected
+* 같은 패키지면 제한 없음, 다른 패키지면 자식 클래스만 가능
+
+4. default
+* 같은 패키지에서는 제한 없음
+
+
+split ("/") 이러한 구분으로 잘라라
+equals = 값이 같다 (비교, 일치하는가?)
+== 주소가 같는지 보는거
+String 타입이 사용가능한 메서드 중에 하나
+
+
+
+가로 세로를 주는데 왜 [] 배열을 하나만 주는가?>???
+ 
