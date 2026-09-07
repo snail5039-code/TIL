@@ -36,3 +36,4 @@
 - [2026_09_02_Day32(Python_LangChain,RAG)](2026_09_02_Day32%28Python_LangChain%2CRAG%29.md)
 - [2026_09_03_Day33(Python_RAG,vactor)](2026_09_03_Day33%28Python_RAG%2Cvactor%29.md)
 - [2026_09_04_Day34(Python_RAG_Evaluation)](2026_09_04_Day34%28Python_RAG_Evaluation%29.md)
+- [2026_09_07_Day35(Python_RAG_Experiment_Design)](2026_09_07_Day35%28Python_RAG_Experiment_Design%29.md)
