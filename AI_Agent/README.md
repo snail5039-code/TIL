@@ -39,3 +39,4 @@
 - [2026_09_07_Day35(Python_RAG_Experiment_Design)](2026_09_07_Day35%28Python_RAG_Experiment_Design%29.md)
 - [2026_09_08_Day36(Python_LangGraph)](2026_09_08_Day36%28Python_LangGraph%29.md)
 - [2026_09_09_Day37(Python_ReAct_Agent)](2026_09_09_Day37%28Python_ReAct_Agent%29.md)
+- [2026_09_10_Day38(Python_RAG_Agent_Router_Guardrails_Reflection)](2026_09_10_Day38%28Python_RAG_Agent_Router_Guardrails_Reflection%29.md)
