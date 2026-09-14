@@ -41,3 +41,4 @@
 - [2026_09_09_Day37(Python_ReAct_Agent)](2026_09_09_Day37%28Python_ReAct_Agent%29.md)
 - [2026_09_10_Day38(Python_RAG_Agent_Router_Guardrails_Reflection)](2026_09_10_Day38%28Python_RAG_Agent_Router_Guardrails_Reflection%29.md)
 - [2026_09_11_Day39(Python_Reflection_Parallelization_Orchestrator_worker)](2026_09_11_Day39%28Python_Reflection_Parallelization_Orchestrator_worker%29.md)
+- [2026_09_14_Day40(Python_Plan_and_Execute)](2026_09_14_Day40%28Python_Plan_and_Execute%29.md)
