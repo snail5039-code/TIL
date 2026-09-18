@@ -45,3 +45,4 @@
 - [2026_09_15_Day41(Python_Human_in_the_Loop)](2026_09_15_Day41%28Python_Human_in_the_Loop%29.md)
 - [2026_09_16_Day42(Python_Human_in_the_Loop_Time_Travel_Agentic_RAG)](2026_09_16_Day42%28Python_Human_in_the_Loop_Time_Travel_Agentic_RAG%29.md)
 - [2026_09_17_Day43(Python_Subgraph_Supervisor_Handoff)](2026_09_17_Day43%28Python_Subgraph_Supervisor_Handoff%29.md)
+- [2026_09_18_Day44(Python_Multi_Agent_Report_System)](2026_09_18_Day44%28Python_Multi_Agent_Report_System%29.md)
