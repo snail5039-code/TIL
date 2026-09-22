@@ -47,3 +47,4 @@
 - [2026_09_17_Day43(Python_Subgraph_Supervisor_Handoff)](2026_09_17_Day43%28Python_Subgraph_Supervisor_Handoff%29.md)
 - [2026_09_18_Day44(Python_Multi_Agent_Report_System)](2026_09_18_Day44%28Python_Multi_Agent_Report_System%29.md)
 - [2026_09_21_Day45(Python_Fault_Tolerance_Agent_Tool_Control_LangGraph_Logging)](2026_09_21_Day45%28Python_Fault_Tolerance_Agent_Tool_Control_LangGraph_Logging%29.md)
+- [2026_09_22_Day46(Python_Virtual_Bank_Agent_Mini_Project_Design)](2026_09_22_Day46%28Python_Virtual_Bank_Agent_Mini_Project_Design%29.md)
