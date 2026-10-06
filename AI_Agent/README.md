@@ -53,3 +53,4 @@
 - [2026_09_30_Day49(Python_LangGraph_Agent_Evaluation_Golden_Set_Interrupt_State_Changes)](2026_09_30_Day49%28Python_LangGraph_Agent_Evaluation_Golden_Set_Interrupt_State_Changes%29.md)
 - [2026_10_01_Day50(Python_LangGraph_Evaluation_Golden_Set_LangSmith)](2026_10_01_Day50%28Python_LangGraph_Evaluation_Golden_Set_LangSmith%29.md)
 - [2026_10_02_Day51(Database_PostgreSQL_SQL_Basics)](2026_10_02_Day51%28Database_PostgreSQL_SQL_Basics%29.md)
+- [2026_10_06_Day52(SQL_JOIN_dvdrental_Practice)](2026_10_06_Day52%28SQL_JOIN_dvdrental_Practice%29.md)
