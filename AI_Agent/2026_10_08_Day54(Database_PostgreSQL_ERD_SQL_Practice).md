@@ -1,92 +1,75 @@
-# Day 54 · 숙소 예약 서비스 ERD 설계와 화면별 SQL 작성하기
+# 26.10.08 54일차(Database · PostgreSQL · ERD 및 SQL 작성 실습)
 
-**학습 날짜**: 2026.10.08  
-**주제**: Database · PostgreSQL · ERD 및 SQL 작성 실습
+## [TIL] 숙소 예약 서비스 ERD 설계와 화면별 SQL 작성하기
 
----
+오늘은 숙소 예약 서비스의 여섯 개 화면을 보고 필요한 데이터를 분석한 뒤, 직접 만든 **`숙소예약_erd.drawio`**를 기준으로 PostgreSQL 테이블과 화면별 조회 SQL을 작성했다.
 
-## 📋 목차
+ERD의 테이블과 관계는 바꾸지 않았고, 실제 DDL과 DML에서는 같은 의미를 가진 영어 테이블명과 컬럼명으로 옮겼다.
 
-1. [개요](#1-개요)
-2. [화면 예시 분석](#2-화면-예시-분석)
-3. [ERD 설계](#3-erd-설계)
-4. [테이블 생성 (DDL)](#4-테이블-생성-ddl)
-5. [샘플 데이터 (DML)](#5-샘플-데이터-dml)
-6. [화면별 조회 SQL](#6-화면별-조회-sql)
-7. [조회 결과 검증](#7-조회-결과-검증)
-8. [학습 포인트](#8-학습-포인트)
+이론과 실습은 다음 흐름으로 이어졌다.
 
----
-
-## 1. 개요
-
-오늘은 **숙소 예약 서비스**의 여섯 개 화면을 분석하고, 필요한 데이터를 정의한 뒤, 직접 설계한 **`숙소예약_erd.drawio`**를 기준으로 PostgreSQL 테이블과 화면별 조회 SQL을 작성했다.
-
-### 학습 흐름
-
-```
+```plain text
 화면 예시 확인
-↓
-내가 만든 ERD 구조 확인
-↓
-ERD의 의미를 영어 테이블/컬럼으로 매핑
-↓
-DDL 작성 (테이블 생성)
-↓
-샘플 데이터 INSERT (DML)
-↓
-화면별 SELECT 작성
-↓
-조회 결과 확인 및 검증
+→ 내가 만든 ERD 구조 확인
+→ ERD의 의미를 영어 테이블/컬럼으로 매핑
+→ DDL 작성
+→ 샘플 데이터 INSERT
+→ 화면별 SELECT 작성
+→ 조회 결과 확인
 ```
 
 ---
 
-## 2. 화면 예시 분석
+## 1. 화면 예시
 
-### 2-1. 메인 페이지
-**목적**: 최근 등록된 숙소를 보여줌  
-**필요 정보**: 숙소명, 주소, 최저 1박 요금, 평균 평점, 등록일
+### 1-1. 메인 페이지
 
-### 2-2. 숙소 목록
-**목적**: 지역 조건으로 숙소 조회  
-**주의점**: 한 숙소에 여러 객실이 있을 수 있으므로 최저 요금은 `MIN(room.price_per_night)`으로 구함
+![메인 페이지](./images54/01_main_page.png)
 
-### 2-3. 숙소 상세 페이지
-**필요 정보**:
-- 숙소 기본 정보
-- 찜 여부 (wishlist 상태)
-- 호스트 정보
-- 편의시설
-- 객실 목록
-- 후기 목록
+최근 등록된 숙소를 보여주는 화면이다. 숙소명, 주소, 최저 1박 요금, 평균 평점, 등록일이 필요하다.
 
-### 2-4. 예약 확인 페이지
-**목적**: 예약 번호 기준으로 예약 상세 정보 표시
+### 1-2. 숙소 목록
 
-### 2-5. 마이페이지
-**표시 항목**:
-- 예약자 정보
-- 내 예약
-- 찜한 숙소
-- 내가 작성한 후기
+![숙소 목록](./images54/02_accommodation_list.png)
 
-### 2-6. 호스트 페이지
-**표시 항목**:
-- 호스트가 등록한 숙소와 객실
-- 예약 현황
-- 예약자 정보
-- 숙소별 예약 집계
-- 후기 현황
+지역 조건으로 숙소를 조회한다. 한 숙소에 객실이 여러 개 있을 수 있으므로 최저 요금은 `MIN(room.price_per_night)`로 구한다.
+
+### 1-3. 숙소 상세 페이지
+
+![숙소 상세 페이지](./images54/03_accommodation_detail.png)
+
+숙소 기본 정보, 찜 여부, 호스트 정보, 편의시설, 객실 목록, 후기 목록이 필요하다.
+
+### 1-4. 예약 확인 페이지
+
+![예약 확인 페이지](./images54/04_booking_confirmation.png)
+
+예약 번호 하나를 기준으로 예약 상세 정보를 보여준다.
+
+### 1-5. 마이페이지
+
+![마이페이지](./images54/05_my_page.png)
+
+예약자 정보, 내 예약, 찜한 숙소, 내가 작성한 후기를 보여준다.
+
+### 1-6. 호스트 페이지
+
+![호스트 페이지](./images54/06_host_page.png)
+
+호스트가 등록한 숙소와 객실, 예약 현황, 예약자 정보, 숙소별 예약 집계와 후기를 보여준다.
 
 ---
 
-## 3. ERD 설계
+## 2. 직접 설계한 숙소 예약 ERD
 
-### 3-1. 테이블 매핑표
+아래 이미지는 이번 실습에서 직접 설계한 `숙소예약_erd.drawio`이다. 이후 테이블 생성과 조회 SQL은 이 구조를 기준으로 작성했다.
+
+![숙소 예약 ERD](./images54/accommodation_reservation_erd.png)
+
+ERD의 한글 테이블/컬럼은 SQL 작성 시 다음처럼 영어 이름으로 매핑했다.
 
 | ERD 테이블 | SQL 테이블 | 역할 |
-|-----------|-----------|------|
+| --- | --- | --- |
 | 호스트 | host | 숙소를 등록하는 사용자 |
 | 예약자 | guest | 예약을 생성하고 후기를 작성하는 사용자 |
 | 편의시설 | amenity | 무선 인터넷, 무료 주차 같은 편의시설 |
@@ -98,25 +81,11 @@ DDL 작성 (테이블 생성)
 | 예약자_찜 | guest_wishlist | 예약자와 찜의 연결 |
 | 숙소_편의시설 | accommodation_amenity | 숙소와 편의시설의 연결 |
 
-### 3-2. 관계도
-
-- **1:N 관계**
-  - `host` → `accommodation` (호스트 1명이 여러 숙소 등록)
-  - `accommodation` → `room` (숙소 1개가 여러 객실 보유)
-  - `accommodation` → `booking` (숙소 1개가 여러 예약 수신)
-  - `guest` → `booking` (게스트 1명이 여러 예약)
-  - `guest` → `review` (게스트 1명이 여러 후기 작성)
-  - `room` → `review` (객실 1개가 여러 후기 수신)
-
-- **M:N 관계** (연결 테이블 사용)
-  - `accommodation` ↔ `amenity` (`accommodation_amenity`를 통해 연결)
-  - `guest` ↔ `wishlist` (`guest_wishlist`를 통해 연결)
-
 ---
 
-## 4. 테이블 생성 (DDL)
+## 3. DDL: 영어 테이블명으로 테이블 생성
 
-### 4-1. 기본 테이블
+### 3-1. 기본 테이블
 
 ```sql
 DROP TABLE IF EXISTS guest_wishlist CASCADE;
@@ -130,14 +99,12 @@ DROP TABLE IF EXISTS amenity CASCADE;
 DROP TABLE IF EXISTS guest CASCADE;
 DROP TABLE IF EXISTS host CASCADE;
 
--- 호스트 테이블
 CREATE TABLE host (
     host_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     profile_description TEXT
 );
 
--- 게스트 테이블
 CREATE TABLE guest (
     guest_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -145,17 +112,15 @@ CREATE TABLE guest (
     phone VARCHAR(20)
 );
 
--- 편의시설 테이블
 CREATE TABLE amenity (
     amenity_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     amenity_type VARCHAR(50) NOT NULL UNIQUE
 );
 ```
 
-### 4-2. 숙소와 객실
+### 3-2. 숙소와 객실
 
 ```sql
--- 숙소 테이블
 CREATE TABLE accommodation (
     accommodation_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
@@ -167,7 +132,6 @@ CREATE TABLE accommodation (
     description TEXT
 );
 
--- 객실 테이블
 CREATE TABLE room (
     room_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     max_guests INT NOT NULL CHECK (max_guests > 0),
@@ -179,12 +143,11 @@ CREATE TABLE room (
 );
 ```
 
-### 4-3. 후기와 예약
+### 3-3. 후기와 예약
 
-**핵심**: ERD의 `후기` 테이블에는 `숙소_id`가 없으므로, `review → room → accommodation` 경로로 숙소별 후기를 조회한다.
+ERD의 `후기`에는 `숙소_id`가 없으므로 `review → room → accommodation` 순서로 숙소별 후기를 조회한다.
 
 ```sql
--- 후기 테이블
 CREATE TABLE review (
     review_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     guest_id INT NOT NULL REFERENCES guest(guest_id),
@@ -195,12 +158,10 @@ CREATE TABLE review (
     room_id INT NOT NULL REFERENCES room(room_id)
 );
 
--- accommodation 테이블에 review_id 제약 추가
 ALTER TABLE accommodation
 ADD CONSTRAINT fk_accommodation_review
 FOREIGN KEY (review_id) REFERENCES review(review_id);
 
--- 예약 테이블
 CREATE TABLE booking (
     booking_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     accommodation_id INT NOT NULL REFERENCES accommodation(accommodation_id),
@@ -219,16 +180,14 @@ CREATE TABLE booking (
 );
 ```
 
-### 4-4. 찜과 편의시설 연결 테이블
+### 3-4. 찜과 편의시설 연결 테이블
 
 ```sql
--- 찜 테이블
 CREATE TABLE wishlist (
     wishlist_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     accommodation_id INT NOT NULL REFERENCES accommodation(accommodation_id)
 );
 
--- 게스트_찜 연결 테이블
 CREATE TABLE guest_wishlist (
     guest_wishlist_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     wishlist_id INT NOT NULL REFERENCES wishlist(wishlist_id),
@@ -236,7 +195,6 @@ CREATE TABLE guest_wishlist (
     UNIQUE (wishlist_id, guest_id)
 );
 
--- 숙소_편의시설 연결 테이블
 CREATE TABLE accommodation_amenity (
     accommodation_amenity_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     amenity_id INT NOT NULL REFERENCES amenity(amenity_id),
@@ -247,15 +205,13 @@ CREATE TABLE accommodation_amenity (
 
 ---
 
-## 5. 샘플 데이터 (DML)
+## 4. DML: 샘플 데이터 생성
 
 ```sql
--- 호스트 데이터
 INSERT INTO host (name, profile_description) VALUES
 ('Lee Haneul', 'I run a small accommodation in Jeju.'),
 ('Kim Minsu', 'I manage accommodations near Gwangalli Beach in Busan.');
 
--- 게스트 데이터
 INSERT INTO guest (name, email, phone) VALUES
 ('Kim Minsu', 'minsu@example.com', '010-1111-1111'),
 ('Park Jiyoung', 'jiyoung@example.com', '010-2222-2222'),
@@ -264,17 +220,14 @@ INSERT INTO guest (name, email, phone) VALUES
 ('Han Doyun', 'doyun@example.com', '010-0000-0002'),
 ('Oh Subin', 'subin@example.com', '010-0000-0003');
 
--- 편의시설 데이터
 INSERT INTO amenity (amenity_type) VALUES
 ('Wi-Fi'), ('Free parking'), ('Air conditioner'), ('Kitchen');
 
--- 숙소 데이터
 INSERT INTO accommodation (name, address, host_id, amenity_id, registered_date, description) VALUES
 ('Jeju Wind House', 'Jeju-si, Aewol-eup, Baram-gil 12', 1, 1, '2025-06-06', 'A quiet place to rest while looking at the sea.'),
 ('Busan Wave House', 'Busan, Suyeong-gu, Gwangan-dong, Beach Road 24', 2, 1, '2025-06-05', 'A small accommodation near Gwangalli Beach.'),
 ('Jeju Stone Wall Stay', 'Seogwipo-si, Andeok-myeon, Doldam-gil 8', 1, 2, '2025-05-20', 'A quiet Jeju accommodation with a beautiful stone wall.');
 
--- 객실 데이터
 INSERT INTO room (max_guests, price_per_night, description, name, accommodation_id) VALUES
 (2, 85000, 'One double bed · garden view', 'Wind 101', 1),
 (4, 130000, 'Two double beds · ocean view', 'Sea 201', 1),
@@ -282,23 +235,19 @@ INSERT INTO room (max_guests, price_per_night, description, name, accommodation_
 (4, 150000, 'Two double beds', 'Wave 201', 2),
 (2, 110000, 'Stone wall garden view', 'Stone 1', 3);
 
--- 숙소_편의시설 연결 데이터
 INSERT INTO accommodation_amenity (amenity_id, accommodation_id) VALUES
 (1, 1), (2, 1), (3, 1), (4, 1),
 (1, 2), (3, 2),
 (1, 3), (2, 3);
 
--- 후기 데이터
 INSERT INTO review (guest_id, rating, content, room_name, written_date, room_id) VALUES
 (2, 5.0, 'The ocean view was great and the room was clean.', 'Sea 201', '2025-06-07', 2),
 (3, 4.0, 'It was quiet and parking was convenient.', 'Wind 101', '2025-06-07', 1),
 (1, 4.0, 'The yard was pretty and quiet. I want to visit again.', 'Stone 1', '2025-05-28', 5);
 
--- accommodation 테이블의 review_id 업데이트
 UPDATE accommodation SET review_id = 1 WHERE accommodation_id = 1;
 UPDATE accommodation SET review_id = 3 WHERE accommodation_id = 3;
 
--- 예약 데이터
 INSERT INTO booking (accommodation_id, address, room_name, check_in, check_out, guest_count, guest_id, room_id, status, booked_date, booking_number, nights) VALUES
 (1, 'Jeju-si, Aewol-eup, Baram-gil 12', 'Wind 101', '2025-06-20', '2025-06-22', 2, 1, 1, 'CONFIRMED', '2025-06-07', 'BK-20250607-001', 2),
 (3, 'Seogwipo-si, Andeok-myeon, Doldam-gil 8', 'Stone 1', '2025-05-25', '2025-05-27', 2, 1, 5, 'COMPLETED', '2025-05-15', 'BK-20250515-002', 2),
@@ -306,16 +255,15 @@ INSERT INTO booking (accommodation_id, address, room_name, check_in, check_out, 
 (2, 'Busan, Suyeong-gu, Gwangan-dong, Beach Road 24', 'Wave 201', '2025-06-21', '2025-06-24', 4, 5, 4, 'CONFIRMED', '2025-06-07', 'BK-20250607-004', 3),
 (2, 'Busan, Suyeong-gu, Gwangan-dong, Beach Road 24', 'Wave 101', '2025-06-25', '2025-06-26', 1, 6, 3, 'CANCELED', '2025-06-06', 'BK-20250606-005', 1);
 
--- 찜 데이터
 INSERT INTO wishlist (accommodation_id) VALUES (1);
 INSERT INTO guest_wishlist (wishlist_id, guest_id) VALUES (1, 1);
 ```
 
 ---
 
-## 6. 화면별 조회 SQL
+## 5. 화면별 조회 SQL 작성
 
-### 6-1. 메인 페이지 - 최근 등록 숙소
+### 5-1. 메인 페이지
 
 ```sql
 SELECT
@@ -335,7 +283,7 @@ GROUP BY a.accommodation_id, a.name, a.address, a.registered_date
 ORDER BY a.registered_date DESC, a.accommodation_id DESC;
 ```
 
-### 6-2. 숙소 목록 - 지역 필터 조회
+### 5-2. 숙소 목록
 
 ```sql
 SELECT
@@ -355,7 +303,7 @@ GROUP BY a.accommodation_id, a.name, a.address
 ORDER BY minimum_price_per_night, average_rating DESC;
 ```
 
-### 6-3. 숙소 상세 페이지 - 기본 정보
+### 5-3. 숙소 상세 페이지
 
 ```sql
 SELECT
@@ -377,28 +325,18 @@ JOIN host h ON h.host_id = a.host_id
 WHERE a.accommodation_id = 1;
 ```
 
-### 6-3-1. 편의시설 조회
-
 ```sql
 SELECT am.amenity_type
 FROM accommodation_amenity aa
 JOIN amenity am ON am.amenity_id = aa.amenity_id
 WHERE aa.accommodation_id = 1
 ORDER BY am.amenity_id;
-```
 
-### 6-3-2. 객실 목록
-
-```sql
 SELECT name AS room_name, description, max_guests, price_per_night
 FROM room
 WHERE accommodation_id = 1
 ORDER BY price_per_night;
-```
 
-### 6-3-3. 후기 목록
-
-```sql
 SELECT
     g.name AS reviewer_name,
     rv.rating,
@@ -412,9 +350,9 @@ WHERE r.accommodation_id = 1
 ORDER BY rv.written_date DESC, rv.review_id DESC;
 ```
 
-### 6-4. 예약 확인 페이지 - 예약 번호로 조회
+### 5-4. 예약 확인 페이지
 
-**주의**: 예약 금액은 `room.price_per_night * booking.nights`로 계산 (테이블 컬럼 없음)
+ERD의 예약 테이블에는 예약 금액 컬럼이 없으므로 `room.price_per_night * booking.nights`로 계산한다.
 
 ```sql
 SELECT
@@ -438,7 +376,7 @@ JOIN room r ON r.room_id = b.room_id
 WHERE b.booking_number = 'BK-20250607-001';
 ```
 
-### 6-5. 마이페이지 - 내 예약 목록
+### 5-5. 마이페이지
 
 ```sql
 SELECT
@@ -458,8 +396,6 @@ WHERE b.guest_id = 1
 ORDER BY b.check_in DESC;
 ```
 
-### 6-5-1. 마이페이지 - 찜한 숙소
-
 ```sql
 SELECT
     a.name AS accommodation_name,
@@ -478,8 +414,6 @@ WHERE gw.guest_id = 1
 GROUP BY a.accommodation_id, a.name, a.address;
 ```
 
-### 6-5-2. 마이페이지 - 내가 작성한 후기
-
 ```sql
 SELECT
     a.name AS accommodation_name,
@@ -494,7 +428,7 @@ WHERE rv.guest_id = 1
 ORDER BY rv.written_date DESC;
 ```
 
-### 6-6. 호스트 페이지 - 예약 목록
+### 5-6. 호스트 페이지
 
 ```sql
 SELECT
@@ -518,8 +452,6 @@ WHERE a.host_id = 2
 ORDER BY b.check_in;
 ```
 
-### 6-6-1. 호스트 페이지 - 예약 집계
-
 ```sql
 SELECT
     a.name AS accommodation_name,
@@ -531,8 +463,6 @@ LEFT JOIN room r ON r.room_id = b.room_id
 WHERE a.host_id = 2
 GROUP BY a.accommodation_id, a.name;
 ```
-
-### 6-6-2. 호스트 페이지 - 후기 현황
 
 ```sql
 SELECT
@@ -555,94 +485,65 @@ ORDER BY a.accommodation_id, rv.written_date DESC;
 
 ---
 
-## 7. 조회 결과 검증
+## 6. 조회 결과 확인
 
-### 검증 항목
+작성한 샘플 데이터를 기준으로 각 화면의 조건과 결과를 비교했다.
 
-| 검증 항목 | 기댓값 | 실제값 | 상태 |
-|----------|--------|--------|------|
-| 메인: 최근 등록 순 | 최신부터 표시 | ✓ | PASS |
-| 메인: 최저 요금 | MIN(room_price) | ✓ | PASS |
-| 메인: 평균 평점 | ROUND(AVG(rating), 1) | ✓ | PASS |
-| 제주 지역 필터 | 제주 2개 숙소 | ✓ | PASS |
-| 예약번호 조회 | BK-20250607-001 | ✓ | PASS |
-| 김민수 예약 | 2건 | ✓ | PASS |
-| 찜한 숙소 | 1건 | ✓ | PASS |
-| 작성 후기 | 1건 | ✓ | PASS |
-| 호스트 예약 집계 | 2건, 640,000원 | ✓ | PASS |
+- 메인 페이지에서는 등록일이 최신인 순서로 숙소가 조회되고, 객실별 요금 중 최솟값과 후기 평균이 함께 표시된다.
+- 제주 지역 목록에서는 주소가 제주로 시작하는 숙소 두 곳만 조회된다.
+- 예약 번호 `BK-20250607-001`을 조회하면 제주 바람집, 바람 101호, 2박, 2명, 총 170,000원이 나온다.
+- 마이페이지에서는 김민수의 예약 두 건, 찜한 숙소 한 건, 작성한 후기 한 건이 조회된다.
+- 호스트 페이지에서는 취소 예약을 제외한 부산 파도하우스의 예약이 2건, 예약 금액 합계가 640,000원으로 집계된다.
 
 ---
 
-## 8. 학습 포인트
+## 7. 헷갈린 점
 
-### 8-1. 데이터 모델링 원칙
+처음에는 화면에 보이는 값을 모두 컬럼으로 저장해야 한다고 생각했다. 하지만 예약 금액은 객실의 1박 요금과 숙박 기간으로 계산할 수 있으므로 `booking` 테이블에 `total_price`를 추가하지 않았다.
 
-✅ **화면에 표시되는 값을 먼저 분석** → 필요한 테이블과 조회 컬럼 파악  
-✅ **계산 가능한 값은 저장하지 않기** → 예약 금액 = `price_per_night * nights`  
-✅ **M:N 관계는 연결 테이블로 표현** → `accommodation_amenity`, `guest_wishlist`  
-
-### 8-2. ERD와 SQL의 관계
-
-- ERD의 한글 개체를 SQL의 영어 테이블명으로 매핑
-- PK는 각 행의 고유 식별, FK는 테이블 간 관계 연결
-- 한글 컬럼명을 영어 snake_case로 변환 (예: `숙소명` → `name`)
-
-### 8-3. 복잡한 조회의 해결책
-
-**문제**: accommodation 테이블에 `amenity_id`가 있으면서 `accommodation_amenity` 연결 테이블도 존재?  
-**해결**: 여러 편의시설을 조회할 때는 연결 테이블 사용
-
-**문제**: `review` 테이블에 `accommodation_id`가 없음 (`review → room → accommodation` 경로 필요)  
-**해결**: JOIN 경로를 명확히 이해하고 서브쿼리 또는 다중 JOIN 활용
-
-**문제**: 객실과 후기를 동시에 JOIN하면 행이 증가할 수 있음  
-**해결**: GROUP BY로 집계하되, 데이터 정합성 확인
-
-### 8-4. SQL 작성의 순서
-
-```
-화면 요구사항 분석
-↓
-필요한 테이블 확인 (조회 범위)
-↓
-WHERE 조건 결정
-↓
-JOIN 경로 설계
-↓
-GROUP BY 및 집계 함수 결정
-↓
-ORDER BY로 정렬 순서 정의
-↓
-샘플 데이터로 검증
+```sql
+r.price_per_night * b.nights AS total_price
 ```
 
-### 8-5. 자주 실수하기 쉬운 부분
+숙소별 평균 평점을 구할 때도 `review` 테이블에 `accommodation_id`가 없어서 바로 조인할 수 없었다. 직접 만든 ERD에서는 후기가 객실을 참조하므로 다음 경로를 따라가야 한다.
 
-❌ 모든 화면 정보를 하나의 테이블에 저장  
-✓ 화면별로 필요한 정보만 JOIN해서 조회
+```plain text
+review.room_id
+→ room.room_id
+→ room.accommodation_id
+→ accommodation.accommodation_id
+```
 
-❌ 계산할 수 있는 값을 모두 컬럼으로 저장  
-✓ 필요할 때만 계산 (예약 금액, 평균 평점)
+또한 `accommodation` 테이블에 `amenity_id`가 있으면서 `accommodation_amenity` 연결 테이블도 존재한다. 이번 실습에서는 내가 만든 ERD를 그대로 유지하고, 여러 편의시설을 조회할 때는 연결 테이블을 사용했다.
 
-❌ M:N 관계를 무시하고 데이터 중복 저장  
-✓ 연결 테이블로 표현하고 JOIN으로 조회
-
----
-
-## 📌 정리
-
-**오늘의 실습 결과**:
-- ✅ 6개 화면 분석 → 10개 테이블 설계
-- ✅ DDL: 제약조건과 FK 포함한 안전한 테이블 생성
-- ✅ DML: 실제 상황을 반영한 샘플 데이터 12건 INSERT
-- ✅ 화면별 SELECT: 6개 화면 × 다중 SQL = 총 13개 쿼리 작성
-- ✅ 결과 검증: 실제 화면 예시와 조회 결과 비교
-
-**다음 단계**:
-- ACID 속성과 트랜잭션 이해
-- 인덱스와 쿼리 성능 최적화
-- 실제 프로젝트에서의 마이그레이션 전략
+목록 화면에서 객실과 후기를 동시에 JOIN하면 객실 수와 후기 수의 조합만큼 행이 늘어날 수 있다. 그래서 최저 요금, 평균 평점, 후기 수를 집계할 때는 숙소 ID를 기준으로 GROUP BY하고 결과 건수를 함께 확인해야 한다.
 
 ---
 
-**#멀티캠퍼스부트캠프** | **#AI캠퍼스** | **#AI에이전트엔지니어**
+## 추가!
+
+오늘 배운 것 정리
+
+- 화면에 표시되는 항목을 먼저 분석하면 필요한 테이블과 조회 컬럼을 찾기 쉽다.
+- ERD는 직접 만든 한글 구조를 기준으로 사용하고, SQL에서는 테이블명과 컬럼명을 영어 snake_case로 작성했다.
+- PK는 각 행을 식별하고, FK는 호스트·숙소·객실·예약자·예약·후기 사이의 관계를 연결한다.
+- 숙소와 편의시설처럼 M:N 관계는 `accommodation_amenity` 같은 연결 테이블로 표현한다.
+- 화면에 보이는 값이라도 계산할 수 있으면 반드시 컬럼으로 저장할 필요는 없다.
+- 예약 금액은 `price_per_night * nights`로 계산했다.
+- 숙소별 후기는 `review → room → accommodation` 경로로 조회했다.
+- 메인, 목록, 상세, 예약 확인, 마이페이지, 호스트 페이지는 필요한 정보가 달라 화면별 SQL을 나누어 작성했다.
+- 조회 결과는 화면 예시의 숙소명, 객실명, 인원, 숙박 기간, 금액, 상태와 비교해서 검증했다.
+
+화면을 기준으로 데이터베이스 실습을 진행할 때는 다음 순서로 생각하면 된다.
+
+```plain text
+화면에서 필요한 데이터 찾기
+→ 직접 만든 ERD에서 테이블과 관계 확인
+→ 한글 개체를 영어 테이블·컬럼으로 매핑
+→ PK·FK·제약조건을 포함한 DDL 작성
+→ 화면 예시에 맞는 샘플 데이터 INSERT
+→ 화면별 SELECT와 JOIN 작성
+→ 결과 건수와 표시 값을 화면 예시와 비교
+```
+
+#부트캠프 #멀티캠퍼스부트캠프 #AI캠퍼스 #AI에이전트엔지니어
