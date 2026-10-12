@@ -56,3 +56,4 @@
 - [2026_10_06_Day52(SQL_JOIN_dvdrental_Practice)](2026_10_06_Day52%28SQL_JOIN_dvdrental_Practice%29.md)
 - [2026_10_07_Day53(Database_Design_Normalization_ERD)](2026_10_07_Day53%28Database_Design_Normalization_ERD%29.md)
 - [2026_10_08_Day54(Database_PostgreSQL_ERD_SQL_Practice)](2026_10_08_Day54%28Database_PostgreSQL_ERD_SQL_Practice%29.md)
+- [2026_10_12_Day55(PostgreSQL_Checkpointer_Store_Text_to_SQL_Agent)](2026_10_12_Day55%28PostgreSQL_Checkpointer_Store_Text_to_SQL_Agent%29.md)
