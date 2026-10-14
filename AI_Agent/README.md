@@ -58,3 +58,4 @@
 - [2026_10_08_Day54(Database_PostgreSQL_ERD_SQL_Practice)](2026_10_08_Day54%28Database_PostgreSQL_ERD_SQL_Practice%29.md)
 - [2026_10_12_Day55(PostgreSQL_Checkpointer_Store_Text_to_SQL_Agent)](2026_10_12_Day55%28PostgreSQL_Checkpointer_Store_Text_to_SQL_Agent%29.md)
 - [2026_10_13_Day56(HTML_CSS_Crawling_Parent_Child_RAG)](2026_10_13_Day56%28HTML_CSS_Crawling_Parent_Child_RAG%29.md)
+- [2026_10_14_Day57(PDF_Multimodal_RAG_Chunking_Agent_Design)](2026_10_14_Day57%28PDF_Multimodal_RAG_Chunking_Agent_Design%29.md)
