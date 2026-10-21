@@ -63,3 +63,4 @@
 - [2026_10_16_Day59(RAG_Agent_Evaluation_Retrieval_Prompt_Baseline)](2026_10_16_Day59%28RAG_Agent_Evaluation_Retrieval_Prompt_Baseline%29.md)
 - [2026_10_19_Day60(MCP_Weather_Server_Local_LLM_Ollama)](2026_10_19_Day60%28MCP_Weather_Server_Local_LLM_Ollama%29.md)
 - [2026_10_20_Day61(Team_RAG_Project_PDF_Extraction_ParentChild_MultiAgent_GoldenSet)](2026_10_20_Day61%28Team_RAG_Project_PDF_Extraction_ParentChild_MultiAgent_GoldenSet%29.md)
+- [2026_10_21_Day62(RAG_Evaluation_LLM_Judge_Trajectory_Variance_Prompt_Experiments)](2026_10_21_Day62%28RAG_Evaluation_LLM_Judge_Trajectory_Variance_Prompt_Experiments%29.md)
