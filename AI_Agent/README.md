@@ -66,3 +66,5 @@
 - [2026_10_21_Day62(RAG_Evaluation_LLM_Judge_Trajectory_Variance_Prompt_Experiments)](2026_10_21_Day62%28RAG_Evaluation_LLM_Judge_Trajectory_Variance_Prompt_Experiments%29.md)
 - [2026_10_22_Day63(RAG_Agent_Search_Fixes_Guardrails_Answer_Evaluation)](2026_10_22_Day63%28RAG_Agent_Search_Fixes_Guardrails_Answer_Evaluation%29.md)
 - [2026_10_23_Day64(FastAPI_Pydantic_Post_Validation)](2026_10_23_Day64%28FastAPI_Pydantic_Post_Validation%29.md)
+- [2026_10_26_Day65(FastAPI_SQLAlchemy_ORM_CRUD_OneToMany)](2026_10_26_Day65%28FastAPI_SQLAlchemy_ORM_CRUD_OneToMany%29.md)
+- [2026_10_27_Day66(SQLAlchemy_ManyToMany_AssociationProxy_NPlusOne)](2026_10_27_Day66%28SQLAlchemy_ManyToMany_AssociationProxy_NPlusOne%29.md)
