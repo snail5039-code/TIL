@@ -68,3 +68,4 @@
 - [2026_10_23_Day64(FastAPI_Pydantic_Post_Validation)](2026_10_23_Day64%28FastAPI_Pydantic_Post_Validation%29.md)
 - [2026_10_26_Day65(FastAPI_SQLAlchemy_ORM_CRUD_OneToMany)](2026_10_26_Day65%28FastAPI_SQLAlchemy_ORM_CRUD_OneToMany%29.md)
 - [2026_10_27_Day66(SQLAlchemy_ManyToMany_AssociationProxy_NPlusOne)](2026_10_27_Day66%28SQLAlchemy_ManyToMany_AssociationProxy_NPlusOne%29.md)
+- [2026_10_28_Day67(FastAPI_Authentication_JWT_Wishlist)](2026_10_28_Day67%28FastAPI_Authentication_JWT_Wishlist%29.md)
