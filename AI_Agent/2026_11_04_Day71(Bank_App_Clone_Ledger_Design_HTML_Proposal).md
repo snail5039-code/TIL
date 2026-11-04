@@ -204,11 +204,9 @@ function blockReason(amount,category){
 
 ## 5. 확인 결과와 수정 과정
 
-기획안과 티스토리용 HTML도 브라우저에서 열어 한글, 목차, 표와 이미지 배치를 확인했다.
+가계부 기획안 HTML을 브라우저에서 열어 한글, 표와 이미지 배치를 확인했다.
 
 ![가계부 기획안 HTML 브라우저 캡처](./images71/06_plan_html.jpg)
-
-![TIL 티스토리용 HTML 브라우저 캡처](./images71/07_tistory_html.jpg)
 
 ### 5-1. 예시 데이터로 확인한 동작
 
