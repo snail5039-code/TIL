@@ -73,3 +73,4 @@
 - [2026_10_30_Day69(Docker_PostgreSQL_pgvector_FastAPI_Compose)](2026_10_30_Day69%28Docker_PostgreSQL_pgvector_FastAPI_Compose%29.md)
 - [2026_11_02_Day70(AWS_EC2_RDS_Docker_Nginx_HTTPS_Vercel)](2026_11_02_Day70%28AWS_EC2_RDS_Docker_Nginx_HTTPS_Vercel%29.md)
 - [2026_11_04_Day71(Bank_App_Clone_Ledger_Design_HTML_Proposal)](2026_11_04_Day71%28Bank_App_Clone_Ledger_Design_HTML_Proposal%29.md)
+- [2026_11_05_Day72(Ledger_App_Auth_Session_ReadOnly_Text_to_SQL)](2026_11_05_Day72%28Ledger_App_Auth_Session_ReadOnly_Text_to_SQL%29.md)
